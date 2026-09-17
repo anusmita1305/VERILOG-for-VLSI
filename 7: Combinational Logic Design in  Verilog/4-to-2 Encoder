@@ -1,0 +1,45 @@
+module encoder4to2 (
+    input [3:0] Y,
+    output reg [1:0] sel
+);
+    always @(*) begin
+        case (Y)
+            4'b0001: sel = 2'b00;
+            4'b0010: sel = 2'b01;
+            4'b0100: sel = 2'b10;
+            4'b1000: sel = 2'b11;
+            default: sel = 2'bxx;
+        endcase
+    end
+endmodule
+
+Testbench
+
+module tb_encoder4to2;
+
+    reg [3:0] Y;
+    wire [1:0] sel;
+
+    // Instantiate DUT
+    encoder4to2 dut (
+        .Y(Y),
+        .sel(sel)
+    );
+
+    initial begin
+        // Display values
+        $monitor("Time = %0t | Y = %b | sel = %b", $time, Y, sel);
+
+        // Test all valid inputs
+        Y = 4'b0001; #10;
+        Y = 4'b0010; #10;
+        Y = 4'b0100; #10;
+        Y = 4'b1000; #10;
+
+        // Test invalid input
+        Y = 4'b0000; #10;
+
+        $finish;
+    end
+
+endmodule
