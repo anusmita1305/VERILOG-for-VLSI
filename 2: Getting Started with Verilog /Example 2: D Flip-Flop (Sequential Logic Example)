@@ -1,0 +1,30 @@
+module d_flip_flop ( 
+    input D,  
+   
+ 
+    input clk,  
+    output reg Q 
+); 
+    always @(posedge clk) 
+        Q <= D; 
+endmodule 
+
+Testbench for D Flip-Flop 
+module testbench; 
+    reg D, clk; 
+    wire Q; 
+ 
+    d_flip_flop uut (D, clk, Q); 
+ 
+    always #5 clk = ~clk; // Clock toggles every 5 time units 
+ 
+    initial begin 
+        clk = 0; D = 0; 
+        #10; D = 1; 
+        #10; D = 0; 
+        #10; D = 1; 
+        #10; D = 0; 
+        #10; 
+        $finish; 
+    end 
+endmodule
