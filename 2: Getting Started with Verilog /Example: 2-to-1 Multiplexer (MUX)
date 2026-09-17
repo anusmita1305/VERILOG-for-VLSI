@@ -1,0 +1,27 @@
+module mux2to1 ( 
+    input A,  
+    input B,  
+    input sel,  
+    output Y 
+); 
+    assign Y = sel ? B : A; // If sel=1, Y=B; else, Y=A 
+endmodule 
+ 
+Testbench for 2:1 MUX 
+module testbench; 
+    reg A, B, sel; 
+    wire Y; 
+ 
+    mux2to1 uut (A, B, sel, Y); 
+ 
+    initial begin 
+        $monitor("A = %b, B = %b, sel = %b, Y = %b", A, B, sel, Y); 
+         
+        A = 0; B = 1; sel = 0; #10; 
+        A = 0; B = 1; sel = 1; #10; 
+        A = 1; B = 0; sel = 0; #10; 
+        A = 1; B = 0; sel = 1; #10; 
+ 
+        $finish; 
+    end 
+endmodule 
